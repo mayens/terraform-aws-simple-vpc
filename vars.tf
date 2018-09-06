@@ -1,8 +1,3 @@
-variable "subnetbits" {
-  description = "netbits to use"
-  default = "3"
-}
-
 variable "cidr_block" {
   description = "cidr block of subnet"
   default = "192.168.1.0/24"
