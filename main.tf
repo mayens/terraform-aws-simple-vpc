@@ -25,7 +25,7 @@ resource "aws_subnet" "this" {
   vpc_id                  = "${aws_vpc.this.id}"
   availability_zone       = "${element(data.aws_availability_zones.available.names ,count.index)}"
   count                   = "${length(data.aws_availability_zones.available.names)}"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = "${var.public_ip_on_launch}"
   tags                    = "${var.tags}"
 }
 

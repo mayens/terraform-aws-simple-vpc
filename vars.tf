@@ -17,3 +17,8 @@ variable "vpc_tags" {
     Name = "Terraform VPC"
   }
 }
+variable "public_ip_on_launch" {
+  type = "string"
+  description = "Map public ip by default on launched resources"
+  default = true
+}
