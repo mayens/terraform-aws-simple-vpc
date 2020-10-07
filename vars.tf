@@ -25,3 +25,8 @@ variable "public_ip_on_launch" {
   default     = true
 }
 
+variable "netbit_masks" {
+  type = number
+  description = "override default netbits masks"
+  default = 0
+}

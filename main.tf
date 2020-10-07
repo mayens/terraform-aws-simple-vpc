@@ -24,7 +24,7 @@ resource "aws_vpc" "this" {
 resource "aws_subnet" "this" {
   cidr_block = cidrsubnet(
     var.cidr_block,
-    local.netbits,
+    var.netbit_masks==0?local.netbits:var.netbit_masks,
     count.index + local.netbit_delta,
   )
   vpc_id                  = aws_vpc.this.id
@@ -61,11 +61,9 @@ resource "aws_route" "default_route" {
 }
 
 ##########################
-##Associate Route table to subnet
+##Associate Route table to vpc
 ##########################
-resource "aws_route_table_association" "this" {
+resource "aws_main_route_table_association" "this" {
   route_table_id = aws_route_table.this.id
-  subnet_id      = aws_subnet.this.*.id[count.index]
-  count          = length(aws_subnet.this)
+  vpc_id         = aws_vpc.this.id
 }
-

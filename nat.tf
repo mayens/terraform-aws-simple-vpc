@@ -8,7 +8,7 @@ resource "aws_eip" "nat_ip" {
 }
 
 resource "aws_subnet" "public_subnet" {
-  cidr_block              = cidrsubnet(var.cidr_block, local.netbits, 1)
+  cidr_block              = cidrsubnet(var.cidr_block, var.netbit_masks==0?local.netbits:var.netbit_masks, 1)
   vpc_id                  = aws_vpc.this.id
   map_public_ip_on_launch = true
   count                   = local.nat_count
