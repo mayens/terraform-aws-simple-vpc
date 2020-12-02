@@ -1,50 +1,36 @@
 terraform {
   required_version = ">= 0.12"
+
 }
 
 locals {
-  netbits = var.public_ip_on_launch ? ceil(log(length(data.aws_availability_zones.available.names), 2)) : ceil(
-    log(2 + length(data.aws_availability_zones.available.names), 2),
-  )
-  netbit_delta = var.public_ip_on_launch ? 1 : 2
+  m_factor=var.public_ip_on_launch ?1:2
+  netbits = ceil(log(length(data.aws_availability_zones.available.names)*local.m_factor,2))
+  net_offset=var.public_ip_on_launch ?0:length(data.aws_availability_zones.available.names)
+  full_offset=local.net_offset+var.start_network
 }
 
-##########################
-##VPC Declaration
-##########################
 resource "aws_vpc" "this" {
   cidr_block           = var.cidr_block
   enable_dns_hostnames = true
   tags                 = merge(var.vpc_tags, var.tags)
 }
 
-##########################
-## Subnet Declaration, One by avz
-##########################
 resource "aws_subnet" "this" {
-  cidr_block = cidrsubnet(
-    var.cidr_block,
-    var.netbit_masks==0?local.netbits:var.netbit_masks,
-    count.index + local.netbit_delta,
-  )
+  for_each = toset(data.aws_availability_zones.available.names)
+  cidr_block = cidrsubnet(var.cidr_block,local.netbits,index(data.aws_availability_zones.available.names,each.value)+local.full_offset)
   vpc_id                  = aws_vpc.this.id
-  availability_zone       = data.aws_availability_zones.available.names[count.index]
-  count                   = length(data.aws_availability_zones.available.names)
+  availability_zone       = each.value
   map_public_ip_on_launch = var.public_ip_on_launch
   tags                    = var.tags
 }
 
-##########################
-##Internet Gateway
-##########################
+
 resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
   tags   = var.tags
 }
 
-##########################
-##Route Table
-##########################
 resource "aws_route_table" "this" {
   vpc_id = aws_vpc.this.id
 
@@ -60,9 +46,6 @@ resource "aws_route" "default_route" {
   }
 }
 
-##########################
-##Associate Route table to vpc
-##########################
 resource "aws_main_route_table_association" "this" {
   route_table_id = aws_route_table.this.id
   vpc_id         = aws_vpc.this.id

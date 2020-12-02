@@ -30,3 +30,9 @@ variable "netbit_masks" {
   description = "override default netbits masks"
   default = 0
 }
+
+variable "start_network" {
+  type = number
+  description = "Num of first network"
+  default = 1
+}
