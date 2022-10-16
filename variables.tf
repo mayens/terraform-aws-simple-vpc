@@ -6,7 +6,7 @@ variable "cidr_block" {
 variable "tags" {
   description = "A map of tags to add to resources"
   type        = map(string)
-  default = {
+  default     = {
     Name = "Terraform VPC_elts"
   }
 }
@@ -14,7 +14,7 @@ variable "tags" {
 variable "vpc_tags" {
   description = "A map of tags to add to vpc only"
   type        = map(string)
-  default = {
+  default     = {
     Name = "Terraform VPC"
   }
 }
@@ -26,13 +26,19 @@ variable "public_ip_on_launch" {
 }
 
 variable "netbit_masks" {
-  type = number
+  type        = number
   description = "override default netbits masks"
-  default = 0
+  default     = 0
 }
 
 variable "start_network" {
-  type = number
+  type        = number
   description = "Num of first network"
-  default = 1
+  default     = 0
+}
+
+variable "resilient_nat_gw" {
+  type        = bool
+  description = "Use one net GW per AZ"
+  default     = false
 }
