@@ -6,6 +6,7 @@ locals {
 }
 
 resource "aws_eip" "nat_ip" {
+  vpc = true
   for_each = local.az_to_nat
   tags     = var.tags
 }
