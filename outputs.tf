@@ -4,18 +4,25 @@ output "vpc_id" {
 }
 
 output "subnets_id" {
-  description = "subnets"
+  description = "subnets ID"
   value       = [for subnet in aws_subnet.this :subnet.id]
 }
 
 output "pub_subnets" {
+  description = "public subnets ID"
   value = [for subnet in aws_subnet.public_subnet :subnet.id]
 }
 output "route_table_id" {
+  description = "Route table ID"
   value = aws_route_table.this.id
 }
 
-output "nat_ip" {
-  value = [for eip in aws_eip.nat_ip :eip.public_ip]
+output "route_table_pub" {
+  description = "Public Route tables id"
+  value = [for rt in aws_route_table.nat_routing : rt.id ]
 }
 
+output "nat_ip" {
+  description = "Nats ip"
+  value = [for eip in aws_eip.nat_ip :eip.public_ip]
+}

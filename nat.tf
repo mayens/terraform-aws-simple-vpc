@@ -1,12 +1,11 @@
 locals {
   az_list   = toset(data.aws_availability_zones.available.names)
   az_to_nat = toset(var.public_ip_on_launch ? [] : (var.resilient_nat_gw ? local.az_list : [
-    element(data.aws_availability_zones.available.names, 0)
+    data.aws_availability_zones.available.names[0]
   ]))
 }
 
 resource "aws_eip" "nat_ip" {
-  vpc = true
   for_each = local.az_to_nat
   tags     = var.tags
 }
