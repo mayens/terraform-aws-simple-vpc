@@ -42,7 +42,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_cidr_block"></a> [cidr\_block](#input\_cidr\_block) | cidr block of subnet | `string` | `"192.168.1.0/24"` | no |
 | <a name="input_netbit_masks"></a> [netbit\_masks](#input\_netbit\_masks) | override default netbits masks | `number` | `0` | no |
-| <a name="input_public_ip_on_launch"></a> [public\_ip\_on\_launch](#input\_public\_ip\_on\_launch) | Map public ip by default on launched resources | `string` | `true` | no |
+| <a name="input_public_ip_on_launch"></a> [public\_ip\_on\_launch](#input\_public\_ip\_on\_launch) | Map public ip by default on launched resources | `bool` | `true` | no |
 | <a name="input_resilient_nat_gw"></a> [resilient\_nat\_gw](#input\_resilient\_nat\_gw) | Use one net GW per AZ | `bool` | `false` | no |
 | <a name="input_start_network"></a> [start\_network](#input\_start\_network) | Num of first network | `number` | `0` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to resources | `map(string)` | <pre>{<br/>  "Name": "Terraform VPC_elts"<br/>}</pre> | no |
@@ -52,9 +52,9 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_default_route_table_id"></a> [default\_route\_table\_id](#output\_default\_route\_table\_id) | Route table ID |
 | <a name="output_nat_ip"></a> [nat\_ip](#output\_nat\_ip) | Nats ip |
 | <a name="output_pub_subnets"></a> [pub\_subnets](#output\_pub\_subnets) | public subnets ID |
-| <a name="output_route_table_id"></a> [route\_table\_id](#output\_route\_table\_id) | Route table ID |
-| <a name="output_route_table_pub"></a> [route\_table\_pub](#output\_route\_table\_pub) | Public Route tables id |
-| <a name="output_subnets_id"></a> [subnets\_id](#output\_subnets\_id) | subnets ID |
+| <a name="output_route_table_private_networks"></a> [route\_table\_private\_networks](#output\_route\_table\_private\_networks) | private Route tables id |
+| <a name="output_subnets_id"></a> [subnets\_id](#output\_subnets\_id) | Private subnets ID |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | VPC ID |

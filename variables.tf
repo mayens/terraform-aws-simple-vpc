@@ -20,7 +20,7 @@ variable "vpc_tags" {
 }
 
 variable "public_ip_on_launch" {
-  type        = string
+  type        = bool
   description = "Map public ip by default on launched resources"
   default     = true
 }
